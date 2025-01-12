@@ -5,11 +5,6 @@ from src.domain.graph import Graph
 
 
 def dijkstra(graph: Graph, source_city: str) -> Tuple[Dict[int, float], Dict[int, Union[int, None]]]:
-    """
-    Implementacja algorytmu Dijkstry, zwraca:
-    distances: słownik node_id -> dystans od source_city
-    predecessors: słownik node_id -> poprzednik w najkrótszej ścieżce
-    """
     if source_city not in graph.city_to_id:
         raise ValueError(f"Source city '{source_city}' not found in graph.")
 
@@ -40,9 +35,6 @@ def reconstruct_path(
         graph: Graph, source_city: str, target_city: str,
         predecessors: Dict[int, Union[int, None]]
 ) -> List[str]:
-    """
-    Odtwarza ścieżkę od source_city do target_city używając słownika poprzedników.
-    """
     if target_city not in graph.city_to_id:
         raise ValueError(f"Target city '{target_city}' not found in graph.")
 

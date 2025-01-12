@@ -5,10 +5,6 @@ from src.domain.graph import Graph
 
 
 def build_full_polish_graph(polish_df: pd.DataFrame) -> Graph:
-    """
-    Buduje kompletny graf miast w Polsce.
-    Waga krawędzi = dystans geodezyjny między miastami w km.
-    """
     g = Graph()
     city_names = polish_df["city"].tolist()
 

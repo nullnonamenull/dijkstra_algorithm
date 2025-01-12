@@ -12,7 +12,6 @@ def visualize_full_graph_with_path(
         g: Graph, polish_df: pd.DataFrame, path_cities: List[str],
         title: str = "", figsize=(12, 10)
 ) -> None:
-    # Rysowanie pełnego grafu + wyróżnienie ścieżki
     G_nx = nx.Graph()
     for idx, row in polish_df.iterrows():
         city = row["city"]
@@ -47,7 +46,6 @@ def visualize_subgraph_with_path(
         g: Graph, polish_df: pd.DataFrame, path_cities: List[str],
         title: str = "", figsize=(8, 6)
 ) -> None:
-    # Rysowanie wyłącznie miast ścieżki + ich krawędzi
     subG_nx = nx.Graph()
 
     for city in path_cities:
@@ -66,12 +64,18 @@ def visualize_subgraph_with_path(
     pos = nx.get_node_attributes(subG_nx, 'pos')
 
     plt.figure(figsize=figsize)
-    nx.draw(subG_nx, pos, with_labels=True, node_color="orange", edge_color="red",
+    nx.draw(subG_nx, pos, with_labels=False, node_color="orange", edge_color="red",
             width=2, node_size=300, font_size=10)
 
+    # Add node numbers and move descriptions
     for i, city in enumerate(path_cities):
         x, y = pos[city]
         plt.text(x, y, str(i + 1), fontsize=8, color="blue", ha="center", va="center")
+        plt.text(x + 0.02, y + 0.02, city, fontsize=8, color="black", ha="left")
+
+    edge_labels = nx.get_edge_attributes(subG_nx, 'weight')
+    edge_labels = {edge: f"{weight:.2f} km" for edge, weight in edge_labels.items()}
+    nx.draw_networkx_edge_labels(subG_nx, pos, edge_labels=edge_labels, font_size=8, label_pos=0.5)
 
     plt.title(title, fontsize=12)
     plt.axis("off")

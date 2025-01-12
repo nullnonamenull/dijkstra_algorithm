@@ -9,15 +9,12 @@ from src.utils.data_loader import load_csv
 
 
 def main():
-    # 1. Wczytanie danych
     file_path = "../data/worldcities.csv"
     df = load_csv(file_path)
     polish_df = df[df["country"] == "Poland"].copy()
 
-    # 2. Budowa pełnego grafu
     full_graph = build_full_polish_graph(polish_df)
 
-    # 3. Ustal listę miast do odwiedzenia
     cities_to_visit = [
         "Warsaw", "Białystok", "Gdańsk", "Szczecin", "Poznań", "Wrocław", "Katowice", "Kraków", "Lublin", "Rzeszów"
     ]
@@ -25,7 +22,6 @@ def main():
     full_path = []
     total_distance = 0.0
 
-    # 4. Algorytm Dijkstry w pętli
     for i in range(len(cities_to_visit) - 1):
         source_city = cities_to_visit[i]
         target_city = cities_to_visit[i + 1]
@@ -34,7 +30,6 @@ def main():
         segment_path = reconstruct_path(full_graph, source_city, target_city, predecessors)
         segment_distance = distances[full_graph.city_to_id[target_city]]
 
-        # Łączenie ścieżek
         if i == 0:
             full_path.extend(segment_path)
         else:
@@ -45,7 +40,6 @@ def main():
     print(f"Shortest path visiting {len(cities_to_visit)} cities: {' -> '.join(full_path)}")
     print(f"Total distance: {total_distance:.2f} km")
 
-    # 5. Wizualizacje
     visualize_full_graph_with_path(
         full_graph,
         polish_df,
