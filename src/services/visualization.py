@@ -78,11 +78,10 @@ def visualize_subgraph_with_path(
     plt.show()
 
 
-def visualize_pafth_on_folium(
+def visualize_path_on_folium(
         polish_df: pd.DataFrame, path_cities: List[str],
         out_html: str = "path.html"
 ) -> None:
-    # Interaktywna mapa Folium
     if len(path_cities) == 0:
         print("No path cities to visualize.")
         return
